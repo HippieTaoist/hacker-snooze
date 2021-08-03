@@ -13,6 +13,50 @@ async function getStoryInfo(storyNum) {
     return storyToRetrieveData;
 }
 
+async function getBackgroundImg(sentURL) {
+    // const URL = sentURL;
+    // let response = await fetch(URL)
+    // let responseData = await response.text();
+    // console.log('htmltext', responseData);
+
+    $.get(sentURL, function (data) {
+        alert('daaaaaaaaaaaaataloaded', data);
+
+
+    })
+
+    // // ajax attempt
+    // let request = new XMLHttpRequest();
+
+    // // Instantiating the request object
+    // request.open("GET", sentURL);
+    // console.log(request)
+    // // Defining event listener for readystatechange event
+    // request.onreadystatechange = function () {
+    //     // Check if the request is compete and was successful
+    //     if (this.readyState === 4 && this.status === 200) {
+    //         // Inserting the response from server into an HTML element
+    //         document.getElementsByTagName("img").src = this.responseText;
+    //         console.log('yodadyodyo', this.responseText)
+    //     }
+    // };
+    // Tried fetch BLLLLLOOOOOOHM
+    // fetch(sentURL, {
+    //     mode: 'no-cors'
+    // }).then(function (response) {
+    //     // The API call was successful!
+    //     console.log(response.text());
+    //     return response.text();
+    // }).then(function (html) {
+    //     // This is the HTML from our response as a text string
+    //     console.log(html);
+    // }).catch(function (err) {
+    //     // There was an error
+    //     console.warn('Something went wrong.', err);
+    // });
+}
+
+getBackgroundImg('https://www.npr.org/2021/08/02/1023801277/your-facebook-account-was-hacked-getting-help-may-take-weeks-or-299')
 // get hacker news items
 async function getHackerNews() {
 
@@ -66,6 +110,52 @@ topStoriesTab.addEventListener('click', console.log('hn_top_stories'));
 // so if i'm working backwards I need to grab the last max item and from there suptract each item and gather it's id / type. once gatherd  seperate in to different areas of the website  according to the classification.
 
 function createStoryCard(hackerNewsResult, className) {
+    // Create div off of className parent
+    let topStoriesParent = document.getElementById(className);
+
+
+    let storyCardMainDiv = document.createElement("div");
+    storyCardMainDiv.className = 'story-card', className;
+
+
+    let storyCardLinkA = document.createElement("a")
+    storyCardLinkA.className = 'story-link';
+    storyCardLinkA.href = hackerNewsResult.url
+
+
+    let storyCardTitleH3 = document.createElement('h3');
+    storyCardTitleH3.innerText = hackerNewsResult.title
+
+
+    let storyCardMetaData = document.createElement('div');
+    storyCardMetaData.className = 'story-meta-data-container';
+
+
+    let storyCardScore = document.createElement('div');
+    storyCardScore.className = 'story-score';
+    storyCardScore.innerText = hackerNewsResult.score;
+
+
+    let storyCardCommentNum = document.createElement('div');
+    storyCardCommentNum.className = 'comment-number';
+    storyCardCommentNum.innerText = hackerNewsResult.kids.length;
+
+
+    let storyCardAuthor = document.createElement('div');
+    storyCardAuthor.className = 'author-username'
+    storyCardAuthor = hackerNewsResult.by;
+
+
+
+    // crate storycard
+
+    storyCardLinkA.append(storyCardTitleH3)
+    storyCardMainDiv.append(storyCardLinkA)
+    storyCardMetaData.append(storyCardAuthor)
+    storyCardMetaData.append(storyCardCommentNum)
+    storyCardMetaData.append(storyCardScore)
+    storyCardMainDiv.append(storyCardMetaData)
+    topStoriesParent.append(storyCardMainDiv)
 
 
 
